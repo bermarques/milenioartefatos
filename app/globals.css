@@ -11,3 +11,9 @@ body {
   background: white !important;
 }
 /* Navbar End */
+
+.ant-menu-title-content {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}

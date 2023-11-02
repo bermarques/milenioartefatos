@@ -9,30 +9,20 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 20px;
+
   .ant-menu-item-selected::after,
   .ant-menu-item:hover::after {
-    transition: none !important;
-    border: none !important;
-    border-color: transparent !important;
+    border-color: ${COLORS.GREEN} !important;
   }
   .ant-menu-item-selected,
   li {
-    color: black !important;
     &:hover {
       color: ${COLORS.GREEN} !important;
     }
   }
-  .ant-menu-item:hover {
-    /* background: #0c7d31 !important; */
-  }
   .ant-menu-item,
   .ant-menu-item:hover {
     top: 0 !important;
-  }
-  .navbar,
-  .ant-menu {
-    /* background: ${COLORS.GREEN}; */
-    border-bottom: none;
   }
   .ant-menu {
     padding: 0;
