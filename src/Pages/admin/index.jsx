@@ -3,10 +3,14 @@ import { Container } from "./styles";
 import Sider from "antd/es/layout/Sider";
 import ListItems from "./ListItems";
 import CreateItemModal from "./CreateItemModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getProducts } from "../../store/modules/products/actions";
 
 const Admin = () => {
   const [addModalVisible, setAddModalVisible] = useState(false);
+
+  const dispatch = useDispatch();
 
   const handleClose = () => {
     setAddModalVisible(false);
@@ -15,6 +19,10 @@ const Admin = () => {
   const handleOpen = () => {
     setAddModalVisible(true);
   };
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
 
   return (
     <Layout>
