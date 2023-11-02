@@ -14,8 +14,7 @@ export function* fetchProducts() {
 }
 export function* fetchCreateProduct({ payload }) {
   try {
-    const { data } = payload;
-    const res = yield* call(api.post, CREATE_PRODUCT_ROUTE, data);
+    const res = yield call(api.post, CREATE_PRODUCT_ROUTE, payload);
 
     yield put({ type: types.CREATE_PRODUCT_SUCCESS, products: res.data });
   } catch (error) {
