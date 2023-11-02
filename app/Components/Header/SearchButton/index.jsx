@@ -9,6 +9,7 @@ import { getSearchbarProducts } from "../../../store/modules/products/actions";
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
+  const getWidth = document.getElementById("search-input")?.offsetWidth;
 
   useEffect(() => {
     if (searchValue.length >= 3) {
@@ -19,13 +20,15 @@ const Search = () => {
   return (
     <Container>
       <Popover
-        content={searchValue.length < 3 ? null : <Content />}
+        content={<Content search={searchValue} searchWidth={getWidth} />}
+        overlayInnerStyle={{ padding: 0 }}
         trigger="focus"
         arrow={false}
         overlayStyle={{ padding: 0 }}
         getPopupContainer={(triggerNode) => triggerNode.parentNode}
       >
         <SearchInput
+          id="search-input"
           onChange={(evt) => setSearchValue(evt.target.value)}
           placeholder="O que você está procurando?"
           rootClassName="milenio-button"

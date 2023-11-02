@@ -5,7 +5,7 @@ import { AiOutlineLoading } from "react-icons/ai";
 const LoadingScreen = () => {
   return (
     <Container>
-      <AiOutlineLoading rotate size={120} color={COLORS.GREEN} />
+      <AiOutlineLoading size={120} color={COLORS.GREEN} />
     </Container>
   );
 };

@@ -23,7 +23,7 @@ const FilterProductsPage = () => {
 
   useEffect(() => {
     dispatch(getProducts(page, undefined, category));
-  }, [page]);
+  }, [page, category]);
 
   return (
     <Container>

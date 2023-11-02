@@ -1,31 +1,37 @@
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Container, Link } from "./styles";
+import Image from "next/image";
 
-const Content = () => {
+const Content = ({ search, searchWidth }) => {
   const { searchbarProducts, loadingSearchbarProducts } = useSelector(
     (state) => state.products
   );
 
+  if (search?.length < 3) return undefined;
+
   return (
     <>
       {loadingSearchbarProducts ? (
-        <Container>Carregando...</Container>
+        <Container searchWidth={searchWidth}>Carregando...</Container>
       ) : searchbarProducts.length ? (
         searchbarProducts.map((item, idx) => (
           <Link key={idx} href={`/detalhes/${item.id}`}>
-            <Container key={idx}>
-              <img
+            <Container key={idx} searchWidth={searchWidth}>
+              <Image
                 width={25}
                 height={25}
                 src={`https://uploadthing.com/f/${item.image}`}
+                alt="imagem"
               />
               {item?.name}
             </Container>
           </Link>
         ))
       ) : (
-        "Nenhum produto encontrado"
+        <Container searchWidth={searchWidth}>
+          Nenhum produto encontrado
+        </Container>
       )}
     </>
   );

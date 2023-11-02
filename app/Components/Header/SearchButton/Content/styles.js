@@ -3,7 +3,7 @@ import { COLORS } from "../../../../consts/COLORS";
 import NextLink from "next/link";
 
 export const Container = styled.div`
-  width: 350px;
+  width: ${(props) => `${props.searchWidth || 0}px`};
   padding: 10px;
   animation: 400ms;
 
@@ -12,6 +12,7 @@ export const Container = styled.div`
   gap: 18px;
   &:hover {
     cursor: pointer;
+    border-radius: 8px;
     background: ${COLORS.backgroundHover};
   }
 `;
