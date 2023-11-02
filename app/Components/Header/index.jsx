@@ -16,7 +16,7 @@ const Header = () => {
     <>
       <Container>
         <LogoContainer onClick={handleImage}>
-          <img src={"Logo.svg"} alt="Logo Milênio" />
+          <img src={"Logo.jfif"} alt="Logo Milênio" width={179} />
         </LogoContainer>
         <Actions>
           <Search />

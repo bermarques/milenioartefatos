@@ -3,7 +3,7 @@ import { COLORS } from "../../consts/COLORS";
 
 export const Container = styled.div`
   display: flex;
-  background: ${COLORS.GREEN};
+  margin-top: 12px;
 
   @media (max-width: 767px) {
     flex-direction: column;
