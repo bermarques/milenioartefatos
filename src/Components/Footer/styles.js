@@ -10,7 +10,7 @@ export default {
 export const Container = styled.div`
   margin-top: 120px;
   width: 100%;
-  height: 218px;
+  height: 248px;
   background: ${COLORS.GREEN};
   display: flex;
 `;
