@@ -7,6 +7,7 @@ import { getProducts } from "../store/modules/products/actions";
 import ItemCard from "./ItemCard";
 import { Pagination } from "antd";
 import { useSearchParams } from "next/navigation";
+import LoadingScreen from "./Loading";
 
 const FilterProductsPage = () => {
   const { products, totalProducts, loadingProducts } = useSelector(
@@ -28,8 +29,12 @@ const FilterProductsPage = () => {
     <Container>
       <SideFilter />
       <Content>
-        {products &&
-          products.map((item, idx) => <ItemCard key={idx} product={item} />)}
+        {loadingProducts ? (
+          <LoadingScreen />
+        ) : (
+          products &&
+          products.map((item, idx) => <ItemCard key={idx} product={item} />)
+        )}
         <PaginationContainer>
           {!loadingProducts && (
             <Pagination
