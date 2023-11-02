@@ -8,9 +8,7 @@ const Items = ({ titulo, items }) => {
     infinite: true,
     slidesToShow: 4,
     arrows: true,
-    variableWidth: true,
-    autoplay: true,
-    pauseOnHover: true,
+    pauseOnHover: false,
   };
 
   return (
