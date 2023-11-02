@@ -6,7 +6,7 @@ export default (reducers) => {
     {
       key: "controlle",
       storage,
-      whitelist: ["products"],
+      whitelist: ["products, auth"],
       blacklist: [],
       transforms: [],
     },

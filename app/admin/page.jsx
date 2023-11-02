@@ -6,11 +6,15 @@ import Sider from "antd/es/layout/Sider";
 import ListItems from "./ListItems";
 import CreateItemModal from "./CreateItemModal";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../store/modules/products/actions";
 import { UploadButton } from "../utils/uploadthing";
+import sessionStorage from "redux-persist/es/storage/session";
+import LoginPage from "./loginPage";
 const Admin = () => {
+  const { loadingLogin } = useSelector((state) => state.auth);
   const [addModalVisible, setAddModalVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -26,29 +30,46 @@ const Admin = () => {
     dispatch(getProducts());
   }, []);
 
+  useEffect(() => {
+    if (window.sessionStorage.getItem("token")) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [loadingLogin]);
+
   return (
     <Layout>
-      <Sider breakpoint="lg" collapsedWidth="0">
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["4"]}
-          items={[
-            "Automotivos",
-            "Colas",
-            "Lonas",
-            "Papel de parede",
-            "Tecidos",
-          ].map((name, index) => ({
-            key: String(index + 1),
-            label: name,
-          }))}
-        />
-      </Sider>
-      <Container>
-        <ListItems handleOpen={handleOpen} />
-        <CreateItemModal visible={addModalVisible} handleClose={handleClose} />
-      </Container>
+      {!isLoggedIn ? (
+        <LoginPage />
+      ) : (
+        <>
+          <Sider breakpoint="lg" collapsedWidth="0">
+            <Menu
+              theme="dark"
+              mode="inline"
+              defaultSelectedKeys={["4"]}
+              items={[
+                "Automotivos",
+                "Colas",
+                "Lonas",
+                "Papel de parede",
+                "Tecidos",
+              ].map((name, index) => ({
+                key: String(index + 1),
+                label: name,
+              }))}
+            />
+          </Sider>
+          <Container>
+            <ListItems handleOpen={handleOpen} />
+            <CreateItemModal
+              visible={addModalVisible}
+              handleClose={handleClose}
+            />
+          </Container>
+        </>
+      )}
     </Layout>
   );
 };
