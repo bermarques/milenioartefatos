@@ -3,4 +3,8 @@ body {
   margin: 0;
 }
 
+.ant-modal-content {
+  padding: 0 !important;
+}
+
 /* Navbar End */
