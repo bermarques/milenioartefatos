@@ -11,7 +11,7 @@ const Search = () => {
   const [_document, set_document] = useState(null)
   const dispatch = useDispatch();
 
-React.useEffect(() => {
+useEffect(() => {
     set_document(document)
 }, [])
   
