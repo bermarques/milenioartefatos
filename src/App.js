@@ -2,12 +2,15 @@ import CarouselComponent from "./Components/Carousel";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
 import Items from "./Components/Items";
+import Assinatura from "./Components/Newsletter";
 import { ITEMS } from "./consts/MOCKED_DATA";
-import { Container } from "./styles";
+import { Container } from "./Routes/styles";
+import "./App.css";
 
 function App() {
   return (
     <Container>
+      <Assinatura />
       <Header />
       <CarouselComponent />
       <Items
