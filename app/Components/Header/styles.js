@@ -11,6 +11,7 @@ export const Container = styled.div`
 `;
 export const LogoContainer = styled.div`
   margin: 0 auto;
+  cursor: pointer;
 `;
 export const Actions = styled.div`
   padding: 11px;

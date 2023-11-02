@@ -2,10 +2,10 @@ import { Container, Descricao, VerDetalhes } from "./styles";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-const Item = ({ descricao, img }) => {
+const Item = ({ descricao, img, id }) => {
   const { push } = useRouter();
   const handleDetails = () => {
-    push(`/detalhes/${product.id}`);
+    push(`/detalhes/${id}`);
   };
 
   return (

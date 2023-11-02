@@ -2,17 +2,15 @@ import { styled } from "styled-components";
 import { COLORS } from "../consts/COLORS";
 
 export const Container = styled.div`
-  border: 1px solid blue;
   display: flex;
   gap: 30px;
 `;
 export const SideFilter = styled.div`
-  border: 1px solid red;
+  background: ${COLORS.SOFT_GREEN_TWO};
   width: 262px;
   min-height: 100vh;
 `;
 export const Content = styled.div`
-  border: 1px solid green;
   width: 100%;
   display: flex;
   flex-wrap: wrap;

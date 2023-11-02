@@ -39,7 +39,12 @@ const Items = ({ titulo, items, backgrounded }) => {
         >
           {items?.map((data, idx) => (
             <SwiperSlide key={idx}>
-              <Item descricao={data.name} img={data.image} key={idx} />
+              <Item
+                descricao={data.name}
+                img={data.image}
+                key={idx}
+                id={data.id}
+              />
             </SwiperSlide>
           ))}
         </Swiper>
