@@ -1,0 +1,58 @@
+export const ITEMS = [
+  {
+    id: 1,
+    img: "",
+    titulo: "Courvin Diamante",
+    precoEmCentavos: 2550,
+    tags: ["tecidos"],
+  },
+  {
+    id: 2,
+    img: "",
+    titulo: "Matelassê para Bolsas",
+    precoEmCentavos: 2550,
+    tags: ["tecidos"],
+  },
+  {
+    id: 3,
+    img: "",
+    titulo: "Tecido Melange",
+    precoEmCentavos: 2550,
+    tags: ["tecidos"],
+  },
+  {
+    id: 4,
+    img: "",
+    titulo: "Couro Malibu",
+    precoEmCentavos: 2550,
+    tags: ["tecidos"],
+  },
+  {
+    id: 5,
+    img: "",
+    titulo: "Adesivo Automotivo Alltak Carbon 4D Vermelho",
+    precoEmCentavos: 2550,
+    tags: ["automotivos"],
+  },
+  {
+    id: 6,
+    img: "",
+    titulo: "Adesivo Automotivo Alltak Carbon 4D Preto",
+    precoEmCentavos: 2550,
+    tags: ["automotivos"],
+  },
+  {
+    id: 7,
+    img: "",
+    titulo: "Adesivo Automotivo Alltak Kamo Urban City Metálico",
+    precoEmCentavos: 2550,
+    tags: ["automotivos"],
+  },
+  {
+    id: 8,
+    img: "",
+    titulo: "Adesivo Automotivo Alltak Kamo Urban Floresta",
+    precoEmCentavos: 2550,
+    tags: ["automotivos"],
+  },
+];
