@@ -3,6 +3,7 @@ import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
   CREATE_PRODUCT_ROUTE,
   DELETE_PRODUCT_ROUTE,
+  GET_CAROUSEL_ROUTE,
   GET_DASHBOARD_PRODUCTS_ROUTE,
 } from "./routes";
 import types from "./types";
@@ -34,6 +35,18 @@ export function* fetchDashboardProducts() {
     });
   } catch (error) {
     yield put({ type: types.GET_DASHBOARD_PRODUCTS_ERROR });
+  }
+}
+export function* fetchCarousel() {
+  try {
+    const res = yield call(api.get, GET_CAROUSEL_ROUTE);
+
+    yield put({
+      type: types.GET_CAROUSEL_SUCCESS,
+      data: res.data,
+    });
+  } catch (error) {
+    yield put({ type: types.GET_CAROUSEL_ERROR });
   }
 }
 export function* fetchProductsSearchbar({ payload }) {
@@ -144,4 +157,5 @@ export default all([
   takeLatest(types.SEARCH_BAR_PRODUCT, fetchProductsSearchbar),
   takeLatest(types.EDIT_PRODUCT, fetchEditProduct),
   takeLatest(types.GET_DASHBOARD_PRODUCTS, fetchDashboardProducts),
+  takeLatest(types.GET_CAROUSEL, fetchCarousel),
 ]);

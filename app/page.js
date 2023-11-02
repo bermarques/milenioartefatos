@@ -4,15 +4,15 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CarouselComponent from "./Components/Carousel";
 import Items from "./Components/Items";
-import { ITEMS } from "./consts/MOCKED_DATA";
-import { getDashboard } from "./store/modules/products/actions";
+import { getCarousel, getDashboard } from "./store/modules/products/actions";
 
 export default function DefaultPage() {
-  const { dashboard } = useSelector((state) => state.products);
+  const { dashboard, carouselData } = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getDashboard());
+    dispatch(getCarousel());
   }, []);
   return (
     <>

@@ -32,5 +32,8 @@ export const getDetails = (id) => ({
 export const getDashboard = () => ({
   type: types.GET_DASHBOARD_PRODUCTS,
 });
+export const getCarousel = () => ({
+  type: types.GET_CAROUSEL,
+});
 
 export const cleanCacheProducts = () => ({ type: types.CLEAN_CACHE_PRODUCTS });

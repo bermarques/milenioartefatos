@@ -4,8 +4,11 @@ import types from "./types";
 const INITIAL_STATE = {
   products: [],
   dashboard: undefined,
+  carouselData: [],
   loadingDashboard: false,
   successDashboard: false,
+  loadingCarousel: false,
+  successCarousel: false,
   searchbarProducts: [],
   totalProducts: 1,
   loadingSearchbarProducts: false,
@@ -132,6 +135,22 @@ export default function products(state = INITIAL_STATE, action) {
       return produce(state, (draft) => {
         draft.loadingDashboard = false;
         draft.successDashboard = false;
+      });
+    case types.GET_CAROUSEL:
+      return produce(state, (draft) => {
+        draft.loadingCarousel = true;
+        draft.successCarousel = false;
+      });
+    case types.GET_CAROUSEL_SUCCESS:
+      return produce(state, (draft) => {
+        draft.carouselData = action.data;
+        draft.loadingCarousel = false;
+        draft.successCarousel = true;
+      });
+    case types.GET_CAROUSEL_ERROR:
+      return produce(state, (draft) => {
+        draft.loadingCarousel = false;
+        draft.successCarousel = false;
       });
     case types.CLEAN_CACHE_PRODUCTS:
       return produce(state, (draft) => {
