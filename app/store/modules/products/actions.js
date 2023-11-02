@@ -1,8 +1,8 @@
 import types from "./types";
 
-export const getProducts = (name, page = 1, pageSize = 10, category) => ({
+export const getProducts = (page = 1, pageSize = 10, category) => ({
   type: types.GET_PRODUCTS,
-  payload: { name, page, pageSize, category },
+  payload: { page, pageSize, category },
 });
 
 export const getSearchbarProducts = (name) => ({

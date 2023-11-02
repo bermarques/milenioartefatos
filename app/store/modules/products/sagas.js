@@ -72,7 +72,7 @@ export function* fetchEditProduct({ payload }) {
         type: types.EDIT_PRODUCT_SUCCESS,
         products: res.data,
       });
-      yield put(getProducts(undefined, undefined, 10, Number(category)));
+      yield put(getProducts(undefined, 10, Number(category)));
     } else {
       const uploadedFile = yield uploadFile(file);
 
@@ -86,7 +86,7 @@ export function* fetchEditProduct({ payload }) {
         type: types.EDIT_PRODUCT_SUCCESS,
         products: res.data,
       });
-      yield put(getProducts(undefined, undefined, 10, Number(category)));
+      yield put(getProducts(undefined, 10, Number(category)));
     }
   } catch (error) {
     console.log(error);

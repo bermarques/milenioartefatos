@@ -1,17 +1,15 @@
 import { styled } from "styled-components";
-import { COLORS } from "../../../consts/COLORS";
 import { Button } from "antd";
+import { COLORS } from "../../consts/COLORS";
 
 export const Container = styled.div`
   width: 218px;
   transition: 200ms;
   margin: 20px;
   padding: 10px;
-  margin-right: 22px;
   border-radius: 2px;
   &:hover {
     box-shadow: 0 0 7px 2px #dcdcdc;
-    transform: scale(1.05);
     /* cursor: pointer; */
   }
 `;

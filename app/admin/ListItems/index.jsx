@@ -16,12 +16,12 @@ const ListItems = ({ handleOpen, selectedKey }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProducts(undefined, 1, 10, selectedKey));
+    dispatch(getProducts(1, 10, selectedKey));
     setPage(1);
   }, [selectedKey]);
 
   useEffect(() => {
-    dispatch(getProducts(undefined, page, 10, selectedKey));
+    dispatch(getProducts(page, 10, selectedKey));
   }, [page]);
 
   return (
