@@ -37,6 +37,7 @@ const Details = ({ params }) => {
     dispatch(getDetails(params.id));
   }, [params.id]);
 
+  console.log(productDetails);
   useEffect(() => {
     dispatch(getProducts(1, undefined, productDetails?.category, undefined));
   }, [productDetails]);
@@ -68,7 +69,13 @@ const Details = ({ params }) => {
               <Divider />
             </CardDescriptionContainer>
             <ButtonContainer>
-              <Button type="primary">Quero falar com um vendedor</Button>
+              <Button
+                type="primary"
+                href="https://api.whatsapp.com/send?phone=5585991076461&text=Olá! Gostaria de falar com um vendedor."
+                target="_blank"
+              >
+                Quero falar com um vendedor
+              </Button>
             </ButtonContainer>
           </ItemInfo>
         </ItemDetail>
@@ -90,20 +97,9 @@ const Details = ({ params }) => {
             <br />
             <b>Recomendações.</b>
             <br />
-            Aplicar em superfície lisa e plana previamente limpa utilizando
-            álcool isopropílico evitando assim o contato com impurezas,
-            oleosidade ou qualquer outro produto químico.
-            <br />
-            Não indicada aplicação em superfícies corrugadas, rugosas e/ou
-            porosas.
-            <br />
-            Utilização de solvente em excesso diminui o tempo de durabilidade do
-            produto.
-            <br />
-            Instalar imediatamente após corte.
-            <br />
-            Depois de aplicado evitar produtos agressivos e atritos constantes,
-            usar sabão neutro.
+            {productDetails?.recommendations?.map((item, idx) => (
+              <div key={idx}>{item.text}</div>
+            ))}
           </p>
         </DescriptionContainer>
         <Items titulo="Não deixe de conferir" items={products} />
