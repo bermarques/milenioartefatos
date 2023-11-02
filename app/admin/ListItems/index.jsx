@@ -17,12 +17,12 @@ const ListItems = ({ handleOpen, selectedKey }) => {
 
   console.log(totalProducts);
   useEffect(() => {
-    dispatch(getProducts(undefined, 1, undefined, selectedKey));
+    dispatch(getProducts(undefined, 1, 10, selectedKey));
     setPage(1);
   }, [selectedKey]);
 
   useEffect(() => {
-    dispatch(getProducts(undefined, page, undefined, selectedKey));
+    dispatch(getProducts(undefined, page, 10, selectedKey));
   }, [page]);
 
   return (
@@ -39,7 +39,7 @@ const ListItems = ({ handleOpen, selectedKey }) => {
           <Pagination
             defaultCurrent={1}
             current={page}
-            pageSize={3}
+            pageSize={10}
             total={totalProducts || 1}
             onChange={(number) => setPage(number)}
           />
