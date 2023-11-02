@@ -1,12 +1,18 @@
 import types from "./types";
 
-export const getProducts = () => ({
+export const getProducts = (name, page = 1, pageSize = 3, category) => ({
   type: types.GET_PRODUCTS,
+  payload: { name, page, pageSize, category },
 });
 
-export const createProduct = (data, file) => ({
+export const getSearchbarProducts = (name) => ({
+  type: types.SEARCH_BAR_PRODUCT,
+  payload: { name },
+});
+
+export const createProduct = (data, file, category) => ({
   type: types.CREATE_PRODUCT,
-  payload: { data, file },
+  payload: { data, file, category },
 });
 
 export const deleteProduct = (product) => ({

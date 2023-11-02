@@ -3,6 +3,10 @@ import types from "./types";
 
 const INITIAL_STATE = {
   products: [],
+  searchbarProducts: [],
+  totalProducts: 1,
+  loadingSearchbarProducts: false,
+  searchbarProductsSuccess: false,
   loadingProducts: false,
   loadingCreateProducts: false,
   successCreateProducts: false,
@@ -24,6 +28,7 @@ export default function products(state = INITIAL_STATE, action) {
       return produce(state, (draft) => {
         draft.products = action.products;
         draft.loadingProducts = false;
+        draft.totalProducts = action.total;
       });
     case types.GET_PRODUCTS_ERROR:
       return produce(state, (draft) => {
@@ -78,6 +83,22 @@ export default function products(state = INITIAL_STATE, action) {
         draft.loadingDelete = false;
         draft.successDelete = false;
       });
+    case types.SEARCH_BAR_PRODUCT:
+      return produce(state, (draft) => {
+        draft.loadingSearchbarProducts = true;
+        draft.searchbarProductsSuccess = false;
+      });
+    case types.SEARCH_BAR_PRODUCT_SUCCESS:
+      return produce(state, (draft) => {
+        draft.searchbarProducts = action.products;
+        draft.loadingSearchbarProducts = false;
+        draft.searchbarProductsSuccess = true;
+      });
+    case types.SEARCH_BAR_PRODUCT_ERROR:
+      return produce(state, (draft) => {
+        draft.loadingSearchbarProducts = false;
+        draft.searchbarProductsSuccess = false;
+      });
     case types.CLEAN_CACHE_PRODUCTS:
       return produce(state, (draft) => {
         draft.loadingProducts = false;
@@ -85,6 +106,8 @@ export default function products(state = INITIAL_STATE, action) {
         draft.successDelete = false;
         draft.loadingCreateProducts = false;
         draft.successCreateProducts = false;
+        draft.loadingSearchbarProducts = false;
+        draft.searchbarProductsSuccess = false;
         draft.productDetails = undefined;
       });
 

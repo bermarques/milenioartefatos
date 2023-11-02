@@ -41,6 +41,9 @@ export const CardDescriptionContainer = styled.div`
 export const GreenContainer = styled.span`
   color: ${COLORS.GREEN};
 `;
+export const RedContainer = styled.span`
+  color: ${COLORS.RED};
+`;
 
 export const ButtonContainer = styled.div`
   text-align: center;

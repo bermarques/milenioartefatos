@@ -13,23 +13,18 @@ import sessionStorage from "redux-persist/es/storage/session";
 import LoginPage from "./loginPage";
 import { verifyToken } from "../utils/token";
 import api from "../services/api";
+import { EnumCategory } from "../utils/enums";
+
 const Admin = () => {
   const { token } = useSelector((state) => state.auth);
-  const [addModalVisible, setAddModalVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [selectedKey, setSelectedKey] = useState("1");
 
-  const { loadingCreateProducts, successCreateProducts } = useSelector(
-    (state) => state.products
-  );
-  const dispatch = useDispatch();
+  const { successCreateProducts } = useSelector((state) => state.products);
 
   const handleOpen = () => {
-    CreateItemModal.open?.();
+    CreateItemModal.open?.("CREATE", undefined, selectedKey);
   };
-
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
 
   useEffect(() => {
     if (verifyToken(token)) {
@@ -53,22 +48,25 @@ const Admin = () => {
             <Menu
               theme="dark"
               mode="inline"
-              defaultSelectedKeys={["4"]}
+              defaultSelectedKeys={[selectedKey]}
+              onSelect={({ key }) => setSelectedKey(key)}
               items={[
-                "Automotivos",
-                "Colas",
-                "Lonas",
-                "Papel de parede",
-                "Tecidos",
-              ].map((name, index) => ({
-                key: String(index + 1),
-                label: name,
+                { name: "Automotivo", value: EnumCategory.automotive },
+                { name: "Acessórios", value: EnumCategory.accessories },
+                { name: "Colas", value: EnumCategory.glues },
+                { name: "Lonas", value: EnumCategory.canvas },
+                { name: "Papel de Parede", value: EnumCategory.wallpapers },
+                { name: "Plástico", value: EnumCategory.plastic },
+                { name: "Tecidos", value: EnumCategory.fabrics },
+              ].map((item) => ({
+                key: String(item.value),
+                label: item.name,
               }))}
             />
           </Sider>
           <Container>
-            <ListItems handleOpen={handleOpen} />
-            <CreateItemModal visible={addModalVisible} />
+            <ListItems handleOpen={handleOpen} selectedKey={selectedKey} />
+            <CreateItemModal />
           </Container>
         </>
       )}

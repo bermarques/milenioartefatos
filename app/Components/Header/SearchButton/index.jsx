@@ -1,15 +1,37 @@
 import { AiOutlineSearch } from "react-icons/ai";
+import { useState, useEffect } from "react";
 import { Container, SearchInput } from "./styles";
-import { Button, Space } from "antd";
+import { Button, Popover, Space } from "antd";
+import Content from "./Content";
+import { useDispatch } from "react-redux";
+import { getSearchbarProducts } from "../../../store/modules/products/actions";
 
 const Search = () => {
+  const [searchValue, setSearchValue] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (searchValue.length >= 3) {
+      dispatch(getSearchbarProducts(searchValue));
+    }
+  }, [searchValue]);
+
   return (
     <Container>
-      <SearchInput
-        placeholder="O que você está procurando?"
-        rootClassName="milenio-button"
-        style={{ width: "100%" }}
-      />
+      <Popover
+        content={searchValue.length < 3 ? null : <Content />}
+        trigger="focus"
+        arrow={false}
+        overlayStyle={{ padding: 0 }}
+        getPopupContainer={(triggerNode) => triggerNode.parentNode}
+      >
+        <SearchInput
+          onChange={(evt) => setSearchValue(evt.target.value)}
+          placeholder="O que você está procurando?"
+          rootClassName="milenio-button"
+          style={{ width: "100%" }}
+        />
+      </Popover>
     </Container>
   );
 };

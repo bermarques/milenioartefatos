@@ -6,24 +6,46 @@ import { uploadFile } from "app/utils/uploadFiles";
 import { utapi } from "uploadthing/server";
 import { getProducts } from "./actions";
 
-export function* fetchProducts() {
+export function* fetchProducts({ payload }) {
   try {
-    const res = yield call(api.get, CREATE_PRODUCT_ROUTE);
+    const res = yield call(api.get, CREATE_PRODUCT_ROUTE, { params: payload });
 
-    yield put({ type: types.GET_PRODUCTS_SUCCESS, products: res.data });
+    yield put({
+      type: types.GET_PRODUCTS_SUCCESS,
+      products: res.data.results,
+      total: res.data.total,
+    });
   } catch (error) {
     yield put({ type: types.GET_PRODUCTS_ERROR });
   }
 }
+export function* fetchProductsSearchbar({ payload }) {
+  try {
+    const { name } = payload;
+
+    const res = yield call(api.get, CREATE_PRODUCT_ROUTE, {
+      params: { name: name, pageSize: 3, page: 1 },
+    });
+
+    yield put({
+      type: types.SEARCH_BAR_PRODUCT_SUCCESS,
+      products: res.data.results,
+    });
+  } catch (error) {
+    yield put({ type: types.SEARCH_BAR_PRODUCT_ERROR });
+  }
+}
 export function* fetchCreateProduct({ payload }) {
   try {
-    const { data, file } = payload;
+    const { data, file, category } = payload;
     const uploadedFile = yield uploadFile(file);
 
+    console.log(category);
     const res = yield call(api.post, CREATE_PRODUCT_ROUTE, {
       ...data,
       image: uploadedFile[0]?.key,
       inStock: !!data.inStock,
+      category: Number(category),
     });
     yield put({
       type: types.CREATE_PRODUCT_SUCCESS,
@@ -64,4 +86,5 @@ export default all([
   takeLatest(types.CREATE_PRODUCT, fetchCreateProduct),
   takeLatest(types.DELETE_PRODUCT, fetchDeleteProduct),
   takeLatest(types.GET_PRODUCT_DETAIL, fetchDetails),
+  takeLatest(types.SEARCH_BAR_PRODUCT, fetchProductsSearchbar),
 ]);

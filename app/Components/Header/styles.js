@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
+import { COLORS } from "../../consts/COLORS";
 
 export const Container = styled.div`
   display: flex;
-  background: #838383;
+  background: ${COLORS.GREEN};
 `;
 export const LogoContainer = styled.div``;
 export const Actions = styled.div`

@@ -34,6 +34,7 @@ const CreateItemModal = ({ handleClose }) => {
   const [visible, setVisible] = useState(false);
   const [modalAction, setModalAction] = useState("CREATE");
   const [productId, setProductId] = useState(null);
+  const [productCategory, setProductCategory] = useState(undefined);
 
   const [form] = Form.useForm();
 
@@ -100,10 +101,11 @@ const CreateItemModal = ({ handleClose }) => {
     }
   };
 
-  const open = (action = "CREATE", id) => {
+  const open = (action = "CREATE", id, selectedKey) => {
     setVisible(true);
     setModalAction(action);
-    setProductId(id);
+    id && setProductId(id);
+    selectedKey && setProductCategory(selectedKey);
   };
 
   const close = () => {
@@ -113,18 +115,11 @@ const CreateItemModal = ({ handleClose }) => {
     form.resetFields();
     setFileList([]);
     handleClose?.();
+    setProductCategory(undefined);
   };
 
   useEffect(() => {
     modalAction === "EDIT" && dispatch(getDetails(productId));
-    setFileList([
-      {
-        uid: "-1",
-        name: "image.png",
-        status: "done",
-        url: "https://utfs.io/f/edcb5a1e-034e-4a46-993c-d73704bdf0c9_Rectangle%2014.png",
-      },
-    ]);
   }, [modalAction]);
 
   useEffect(() => {
@@ -136,6 +131,15 @@ const CreateItemModal = ({ handleClose }) => {
         providingAndDurability: productDetails.providingAndDurability,
         inStock: productDetails.inStock,
       });
+    productDetails &&
+      setFileList([
+        {
+          uid: "-1",
+          name: "image.png",
+          status: "done",
+          url: productDetails.image,
+        },
+      ]);
   }, [productDetails]);
 
   CreateItemModal.open = open;
@@ -155,7 +159,7 @@ const CreateItemModal = ({ handleClose }) => {
   );
 
   const handleFinish = (e) => {
-    dispatch(createProduct(e, fileList[0]?.originFileObj));
+    dispatch(createProduct(e, fileList[0]?.originFileObj, productCategory));
   };
 
   return (
@@ -173,7 +177,6 @@ const CreateItemModal = ({ handleClose }) => {
                 listType="picture-card"
                 fileList={fileList}
                 multiple={false}
-                url="https://utfs.io/f/edcb5a1e-034e-4a46-993c-d73704bdf0c9_Rectangle%2014.png"
                 onPreview={handlePreview}
                 onChange={handleChangeUpload}
               >

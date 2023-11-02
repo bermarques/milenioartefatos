@@ -11,3 +11,9 @@ export const ListContainer = styled.div`
   gap: 18px;
   margin-bottom: 18px;
 `;
+
+export const PaginationContainer = styled.div`
+  width: 100%;
+  text-align: end;
+  margin-bottom: 18px;
+`;
