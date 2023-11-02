@@ -6,7 +6,7 @@ export default (reducers) => {
     {
       key: "milenio",
       storage,
-      whitelist: ["products, auth"],
+      whitelist: ["products, auth, admin"],
       blacklist: [],
       transforms: [],
     },

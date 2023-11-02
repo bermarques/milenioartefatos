@@ -14,6 +14,7 @@ import LoginPage from "./loginPage";
 import { verifyToken } from "../utils/token";
 import api from "../services/api";
 import { EnumCategory } from "../utils/enums";
+import UploadBanner from "./UploadBanner";
 
 const Admin = () => {
   const { token } = useSelector((state) => state.auth);
@@ -58,6 +59,7 @@ const Admin = () => {
                 { name: "Papel de Parede", value: EnumCategory.wallpapers },
                 { name: "Plástico", value: EnumCategory.plastic },
                 { name: "Tecidos", value: EnumCategory.fabrics },
+                { name: "Configurações", value: "settings" },
               ].map((item) => ({
                 key: String(item.value),
                 label: item.name,
@@ -65,8 +67,14 @@ const Admin = () => {
             />
           </Sider>
           <Container>
-            <ListItems handleOpen={handleOpen} selectedKey={selectedKey} />
-            <CreateItemModal />
+            {selectedKey === "settings" ? (
+              <UploadBanner />
+            ) : (
+              <>
+                <ListItems handleOpen={handleOpen} selectedKey={selectedKey} />
+                <CreateItemModal />
+              </>
+            )}
           </Container>
         </>
       )}
