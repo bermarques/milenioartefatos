@@ -20,6 +20,9 @@ export const Descricao = styled.p`
   margin-top: 0;
   margin-bottom: 20px;
   text-align: center;
+  text-overflow: ellipsis;
+  white-space: pre;
+  overflow: hidden;
 `;
 
 export const VerDetalhes = styled(Button)`
