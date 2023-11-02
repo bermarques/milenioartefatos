@@ -1,9 +1,10 @@
 import { Container, Descricao, VerDetalhes } from "./styles";
+import Image from "next/image";
 
 const Item = ({ descricao, img }) => {
   return (
     <Container>
-      <img
+      <Image
         width={218}
         height={218}
         alt="Imagem"
