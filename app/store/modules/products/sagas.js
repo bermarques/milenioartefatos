@@ -23,6 +23,7 @@ export function* fetchCreateProduct({ payload }) {
     const res = yield call(api.post, CREATE_PRODUCT_ROUTE, {
       ...data,
       image: uploadedFile[0]?.key,
+      inStock: !!data.inStock,
     });
     yield put({
       type: types.CREATE_PRODUCT_SUCCESS,
