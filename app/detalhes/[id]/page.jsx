@@ -23,19 +23,23 @@ import {
 } from "../styles";
 import { Divider } from "antd";
 import { useEffect } from "react";
-import { getDetails } from "../../store/modules/products/actions";
+import { getDetails, getProducts } from "../../store/modules/products/actions";
 import { Suspense } from "react";
 
 const Details = ({ params }) => {
   const dispatch = useDispatch();
 
-  const { productDetails, loadingDetails } = useSelector(
+  const { productDetails, loadingDetails, products } = useSelector(
     (state) => state.products
   );
 
   useEffect(() => {
     dispatch(getDetails(params.id));
   }, [params.id]);
+
+  useEffect(() => {
+    dispatch(getProducts(1, undefined, productDetails?.category, undefined));
+  }, [productDetails]);
 
   return (
     <Container>
@@ -102,10 +106,7 @@ const Details = ({ params }) => {
             usar sabão neutro.
           </p>
         </DescriptionContainer>
-        <Items
-          titulo="Não deixe de conferir"
-          items={ITEMS.filter((item) => item.tags.includes("tecidos"))}
-        />
+        <Items titulo="Não deixe de conferir" items={products} />
       </Suspense>
     </Container>
   );
