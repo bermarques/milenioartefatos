@@ -137,6 +137,9 @@ const CreateItemModal = ({ handleClose }) => {
         indications: productDetails.indications,
         providingAndDurability: productDetails.providingAndDurability,
         inStock: productDetails.inStock,
+        recommendations: productDetails.recommendations?.map((item) => ({
+          text: item.text,
+        })),
       });
       setFileList([
         {
@@ -168,10 +171,9 @@ const CreateItemModal = ({ handleClose }) => {
 
   const handleFinish = (e) => {
     const file = fileList[0].url ? fileList[0].url : fileList[0]?.originFileObj;
-    console.log(e);
-    // modalAction === "EDIT"
-    //   ? dispatch(editProduct(e, file, productDetails.category, productId))
-    //   : dispatch(createProduct(e, fileList[0]?.originFileObj, productCategory));
+    modalAction === "EDIT"
+      ? dispatch(editProduct(e, file, productDetails.category, productId))
+      : dispatch(createProduct(e, fileList[0]?.originFileObj, productCategory));
   };
 
   return (
@@ -234,15 +236,15 @@ const CreateItemModal = ({ handleClose }) => {
             </Form.Item>
 
             <Form.List
-              name="recomendations"
-              initialValue={[{ quantity: 1, value: 0 }]}
+              name="recommendations"
+              initialValue={[{ text: "" }]}
               rules={[
                 {
                   validator: async (_, items) => {
                     if (!items || items.length < 1) {
                       return Promise.reject(
                         new Error(
-                          "Necessário adicionar pelo menos uma recomendação de uso"
+                          "Necessário adicionar pelo menos uma recomendação"
                         )
                       );
                     }
@@ -258,15 +260,14 @@ const CreateItemModal = ({ handleClose }) => {
                         <ItemContainer key={key}>
                           <Form.Item
                             {...restField}
-                            name={[name, "name"]}
+                            name={[name, "text"]}
                             label={idx === 0 ? `Recomendações` : ""}
                             style={{ width: "100%" }}
                             rules={[
                               {
                                 required: true,
                                 whitespace: true,
-                                message:
-                                  "Necessário descrever a recomendação de uso",
+                                message: "Necessário descrever a recomendação",
                               },
                             ]}
                           >
