@@ -39,6 +39,7 @@ const CreateItemModal = ({ handleClose }) => {
   const [visible, setVisible] = useState(false);
   const [modalAction, setModalAction] = useState("CREATE");
   const [productId, setProductId] = useState(null);
+  const [switchToggle, setSwitchToggle] = useState(false);
   const [productCategory, setProductCategory] = useState(undefined);
 
   const [form] = Form.useForm();
@@ -121,6 +122,7 @@ const CreateItemModal = ({ handleClose }) => {
     setFileList([]);
     handleClose?.();
     setProductCategory(undefined);
+    setSwitchToggle(false);
   };
 
   useEffect(() => {
@@ -128,7 +130,7 @@ const CreateItemModal = ({ handleClose }) => {
   }, [modalAction]);
 
   useEffect(() => {
-    productDetails &&
+    if (productDetails) {
       form.setFieldsValue({
         name: productDetails.name,
         description: productDetails.description,
@@ -136,7 +138,6 @@ const CreateItemModal = ({ handleClose }) => {
         providingAndDurability: productDetails.providingAndDurability,
         inStock: productDetails.inStock,
       });
-    productDetails &&
       setFileList([
         {
           uid: "-1",
@@ -145,6 +146,8 @@ const CreateItemModal = ({ handleClose }) => {
           url: `https://uploadthing.com/f/${productDetails.image}`,
         },
       ]);
+      setSwitchToggle(!!form.getFieldValue("inStock"));
+    }
   }, [productDetails]);
 
   CreateItemModal.open = open;
@@ -165,9 +168,10 @@ const CreateItemModal = ({ handleClose }) => {
 
   const handleFinish = (e) => {
     const file = fileList[0].url ? fileList[0].url : fileList[0]?.originFileObj;
-    modalAction === "EDIT"
-      ? dispatch(editProduct(e, file, productDetails.category, productId))
-      : dispatch(createProduct(e, fileList[0]?.originFileObj, productCategory));
+    console.log(e);
+    // modalAction === "EDIT"
+    //   ? dispatch(editProduct(e, file, productDetails.category, productId))
+    //   : dispatch(createProduct(e, fileList[0]?.originFileObj, productCategory));
   };
 
   return (
@@ -223,7 +227,10 @@ const CreateItemModal = ({ handleClose }) => {
             </Form.Item>
             <Typography>Em estoque</Typography>
             <Form.Item noStyle name="inStock">
-              <Switch />
+              <Switch
+                onChange={(val) => setSwitchToggle(val)}
+                checked={switchToggle}
+              />
             </Form.Item>
 
             <Form.List
