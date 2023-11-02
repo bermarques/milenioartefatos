@@ -16,12 +16,12 @@ const Content = ({ search, searchWidth }) => {
         <Container searchWidth={searchWidth}>Carregando...</Container>
       ) : searchbarProducts.length ? (
         searchbarProducts.map((item, idx) => (
-          <Link key={idx} href={`/detalhes/[id]`} as={`/detalhes/${item.id}`}>
+          <Link key={idx} href={`/detalhes?id=${item.id}`}>
             <Container key={idx} searchWidth={searchWidth}>
               <img
                 width={25}
                 height={25}
-                src={`https://uploadthing.com/f/${item.image}`}
+                src={`https://milenioartefatos.com.br/api/images/${item.image}`}
                 alt="imagem"
                 loading="lazy"
               />

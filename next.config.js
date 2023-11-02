@@ -6,9 +6,9 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "uploadthing.com",
+        hostname: "milenioartefatos.com.br",
         port: "",
-        pathname: "/f/**",
+        pathname: "/api/images/**",
       },
     ],
   },

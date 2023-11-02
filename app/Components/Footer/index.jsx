@@ -1,11 +1,15 @@
 "use client";
 
+import { AiFillFacebook, AiFillInstagram } from "react-icons/ai";
+
 import {
   Container,
   Descricao,
+  Icons,
   LogoContainer,
   Loja,
   OutrasLojas,
+  SocialMedias,
   Titulo,
 } from "./styles";
 
@@ -15,6 +19,7 @@ const Footer = () => {
       <LogoContainer>
         <img src={"LogoBranco.png"} alt="Logo Milênio" />
       </LogoContainer>
+
       <OutrasLojas>
         <Loja>
           <Titulo>Loja Conceito</Titulo>
@@ -32,6 +37,29 @@ const Footer = () => {
           <Descricao>Telefone: (85) 3382-0375 / (85) 3014-4205</Descricao>
         </Loja>
       </OutrasLojas>
+      <SocialMedias>
+        <Titulo>Acompanhe a Milênio Artefatos</Titulo>
+        <Icons>
+          <AiFillFacebook
+            size={40}
+            color="#fff"
+            onClick={() =>
+              window.open("https://www.facebook.com/milenioartefatosoficial")
+            }
+            target="_blank"
+            style={{ cursor: "pointer" }}
+          />
+          <AiFillInstagram
+            size={40}
+            color="#fff"
+            onClick={() =>
+              window.open("https://www.instagram.com/milenioartefatosoficial/")
+            }
+            target="_blank"
+            style={{ cursor: "pointer" }}
+          />
+        </Icons>
+      </SocialMedias>
     </Container>
   );
 };

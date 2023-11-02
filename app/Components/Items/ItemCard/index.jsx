@@ -5,7 +5,7 @@ import Image from "next/image";
 const Item = ({ descricao, img, id }) => {
   const { push } = useRouter();
   const handleDetails = () => {
-    push(`/detalhes/[id]`, `/detalhes/${id}`);
+    push(`/detalhes?id=${id}`);
   };
 
   return (
@@ -14,7 +14,7 @@ const Item = ({ descricao, img, id }) => {
         width={218}
         height={218}
         alt="Imagem"
-        src={`https://uploadthing.com/f/${img}`}
+        src={`https://milenioartefatos.com.br/api/images/${img}`}
         loading="lazy"
       />
       <Descricao title={descricao}>{descricao}</Descricao>

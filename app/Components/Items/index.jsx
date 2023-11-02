@@ -1,5 +1,6 @@
 import Item from "./ItemCard";
 import { Container, ItemsContainer, Titulo } from "./styles";
+import { useRouter } from "next/navigation";
 import { COLORS } from "../../consts/COLORS";
 import "swiper/css";
 import "swiper/css/navigation";

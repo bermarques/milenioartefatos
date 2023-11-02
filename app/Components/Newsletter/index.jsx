@@ -30,7 +30,6 @@ const Assinatura = ({ show, handleSignUp, handleCancel }) => {
     <Modal
       open={show}
       centered
-      closeIcon={false}
       footer={null}
       width={"1000px"}
       className="newsletter"

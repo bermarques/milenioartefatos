@@ -12,6 +12,9 @@ const LeftMenu = ({ mode }) => {
 
   return (
     <Menu mode={mode} disabledOverflow>
+      <Menu.Item key="home" onClick={() => push("/")}>
+        Home
+      </Menu.Item>
       <Menu.Item
         key="automotive"
         onClick={() => handleClick(EnumCategory.automotive)}

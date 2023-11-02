@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 
 const Item = ({ product }) => {
   const handleDetails = () => {
-    push(`/detalhes/${product.id}`);
+    push(`/detalhes?id=${product.id}`);
   };
 
   const { push } = useRouter();
@@ -13,7 +13,7 @@ const Item = ({ product }) => {
         width={218}
         height={218}
         alt="Imagem"
-        src={`https://uploadthing.com/f/${product?.image}`}
+        src={`https://milenioartefatos.com.br/api/images/${product?.image}`}
       />
       <Descricao>{product?.name}</Descricao>
       <VerDetalhes onClick={handleDetails}>Ver detalhes</VerDetalhes>

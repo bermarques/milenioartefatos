@@ -4,8 +4,7 @@ import { Button as antdButton } from "antd";
 
 export const Container = styled.div`
   width: 100%;
-  margin: 18px 0;
-  background: ${COLORS.GREEN};
+  /* background: ${COLORS.GREEN}; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,10 +17,13 @@ export const Container = styled.div`
   }
   .ant-menu-item-selected,
   li {
-    color: #fff !important;
+    color: black !important;
+    &:hover {
+      color: ${COLORS.GREEN} !important;
+    }
   }
   .ant-menu-item:hover {
-    background: #0c7d31 !important;
+    /* background: #0c7d31 !important; */
   }
   .ant-menu-item,
   .ant-menu-item:hover {
@@ -29,7 +31,7 @@ export const Container = styled.div`
   }
   .navbar,
   .ant-menu {
-    background: ${COLORS.GREEN};
+    /* background: ${COLORS.GREEN}; */
     border-bottom: none;
   }
   .ant-menu {

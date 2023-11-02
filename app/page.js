@@ -17,13 +17,11 @@ export default function DefaultPage() {
   const dispatch = useDispatch();
 
   const handleSignUp = (email) => {
-    localStorage.setItem("showNewsletter", "false");
     setShowNewsletter(false);
     dispatch(registerEmail(email));
   };
 
   const handleCancel = () => {
-    localStorage.setItem("showNewsletter", "false");
     setShowNewsletter(false);
   };
 
@@ -33,9 +31,7 @@ export default function DefaultPage() {
   }, []);
 
   useEffect(() => {
-    successDashboard &&
-      !localStorage.getItem("showNewsletter") &&
-      setShowNewsletter(true);
+    successDashboard && setShowNewsletter(true);
   }, [successDashboard]);
 
   return (

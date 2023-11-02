@@ -44,6 +44,21 @@ export const Loja = styled.div`
   width: 280px;
   flex-direction: column;
 `;
+export const SocialMedias = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+  position: relative;
+  justify-content: center;
+  align-self: center;
+  align-items: center;
+`;
+
+export const Icons = styled.div`
+  display: flex;
+  gap: 10px;
+`;
 
 export const Titulo = styled.h4`
   margin: 0;

@@ -8,7 +8,11 @@ export const Container = styled.div`
   display: flex;
 `;
 export const ImageContainer = styled.div`
+  @media (max-width: 767px) {
+    display: none;
+  }
   overflow: hidden;
+
   width: 500px;
   height: 500px;
   border-radius: 4px;

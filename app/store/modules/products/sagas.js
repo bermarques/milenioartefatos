@@ -43,7 +43,7 @@ export function* fetchCarousel() {
 
     yield put({
       type: types.GET_CAROUSEL_SUCCESS,
-      data: res.data,
+      data: res.data.carousels,
     });
   } catch (error) {
     yield put({ type: types.GET_CAROUSEL_ERROR });
