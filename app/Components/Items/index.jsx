@@ -1,4 +1,3 @@
-import { Carousel } from "antd";
 import Item from "./ItemCard";
 import { Container, ItemsContainer, Titulo } from "./styles";
 import { COLORS } from "../../consts/COLORS";
@@ -18,26 +17,23 @@ const Items = ({ titulo, items, backgrounded }) => {
         <Swiper
           loop
           slidesPerView={4}
+          centeredSlides={false}
           navigation={true}
           modules={[Navigation]}
           breakpoints={{
             0: {
               slidesPerView: 1,
-              spaceBetween: 20,
               centeredSlides: true,
             },
             640: {
               slidesPerView: 2,
-              spaceBetween: 20,
               centeredSlides: true,
             },
             900: {
               slidesPerView: 3,
-              spaceBetween: 20,
             },
             1221: {
               slidesPerView: 4,
-              spaceBetween: 20,
             },
           }}
         >

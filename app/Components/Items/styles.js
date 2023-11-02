@@ -16,4 +16,13 @@ export const Titulo = styled.h2`
   color: ${COLORS.BLACK};
 `;
 
-export const ItemsContainer = styled.div``;
+export const ItemsContainer = styled.div`
+  width: 100%;
+  height: 100%;
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;

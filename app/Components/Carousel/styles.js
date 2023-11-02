@@ -1,4 +1,8 @@
 import { styled } from "styled-components";
-import { Carousel as antdCarousel } from "antd";
 
-export const Carousel = styled(antdCarousel)``;
+export const Container = styled.div`
+  width: 100%;
+  img {
+    width: 100%;
+  }
+`;
