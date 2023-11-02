@@ -14,4 +14,9 @@ export const deleteProduct = (product) => ({
   payload: { product },
 });
 
+export const getDetails = (id) => ({
+  type: types.GET_PRODUCT_DETAIL,
+  payload: { id },
+});
+
 export const cleanCacheProducts = () => ({ type: types.CLEAN_CACHE_PRODUCTS });

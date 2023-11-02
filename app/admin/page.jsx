@@ -23,12 +23,8 @@ const Admin = () => {
   );
   const dispatch = useDispatch();
 
-  const handleClose = () => {
-    setAddModalVisible(false);
-  };
-
   const handleOpen = () => {
-    setAddModalVisible(true);
+    CreateItemModal.open?.();
   };
 
   useEffect(() => {
@@ -44,7 +40,7 @@ const Admin = () => {
   }, [token]);
 
   useEffect(() => {
-    successCreateProducts && handleClose();
+    successCreateProducts && CreateItemModal.close?.();
   }, [successCreateProducts]);
 
   return (
@@ -72,10 +68,7 @@ const Admin = () => {
           </Sider>
           <Container>
             <ListItems handleOpen={handleOpen} />
-            <CreateItemModal
-              visible={addModalVisible}
-              handleClose={handleClose}
-            />
+            <CreateItemModal visible={addModalVisible} />
           </Container>
         </>
       )}

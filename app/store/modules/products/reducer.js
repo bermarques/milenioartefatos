@@ -6,8 +6,11 @@ const INITIAL_STATE = {
   loadingProducts: false,
   loadingCreateProducts: false,
   successCreateProducts: false,
+  loadingDetails: false,
+  successDetails: false,
   loadingDelete: false,
   successDelete: false,
+  productDetails: undefined,
 };
 
 export default function products(state = INITIAL_STATE, action) {
@@ -30,21 +33,35 @@ export default function products(state = INITIAL_STATE, action) {
       return produce(state, (draft) => {
         draft.loadingCreateProducts = true;
         draft.successCreateProducts = false;
-        draft.loadingCreateProducts = true;
       });
     case types.CREATE_PRODUCT_SUCCESS:
       return produce(state, (draft) => {
         draft.loadingCreateProducts = false;
         draft.successCreateProducts = true;
-        draft.loadingCreateProducts = false;
       });
     case types.CREATE_PRODUCT_ERROR:
       return produce(state, (draft) => {
         draft.loadingCreateProducts = false;
         draft.successCreateProducts = false;
-        draft.loadingCreateProducts = false;
       });
-
+    case types.GET_PRODUCT_DETAIL:
+      return produce(state, (draft) => {
+        draft.loadingDetails = true;
+        draft.successDetails = false;
+        draft.productDetails = undefined;
+      });
+    case types.GET_PRODUCT_DETAIL_SUCCESS:
+      return produce(state, (draft) => {
+        draft.loadingDetails = false;
+        draft.successDetails = false;
+        draft.productDetails = action.product;
+      });
+    case types.GET_PRODUCT_DETAIL_ERROR:
+      return produce(state, (draft) => {
+        draft.loadingDetails = false;
+        draft.successDetails = false;
+        draft.productDetails = undefined;
+      });
     case types.DELETE_PRODUCT:
       return produce(state, (draft) => {
         draft.loadingDelete = true;
@@ -61,7 +78,6 @@ export default function products(state = INITIAL_STATE, action) {
         draft.loadingDelete = false;
         draft.successDelete = false;
       });
-
     case types.CLEAN_CACHE_PRODUCTS:
       return produce(state, (draft) => {
         draft.loadingProducts = false;
@@ -69,6 +85,7 @@ export default function products(state = INITIAL_STATE, action) {
         draft.successDelete = false;
         draft.loadingCreateProducts = false;
         draft.successCreateProducts = false;
+        draft.productDetails = undefined;
       });
 
     default:

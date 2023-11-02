@@ -46,9 +46,22 @@ export function* fetchDeleteProduct({ payload }) {
     yield put({ type: types.DELETE_PRODUCT_ERROR });
   }
 }
+export function* fetchDetails({ payload }) {
+  try {
+    const { id } = payload;
+    const res = yield call(api.get, `${CREATE_PRODUCT_ROUTE}/${id}`);
+    yield put({
+      type: types.GET_PRODUCT_DETAIL_SUCCESS,
+      product: res.data,
+    });
+  } catch (error) {
+    yield put({ type: types.GET_PRODUCT_DETAIL_ERROR });
+  }
+}
 
 export default all([
   takeLatest(types.GET_PRODUCTS, fetchProducts),
   takeLatest(types.CREATE_PRODUCT, fetchCreateProduct),
   takeLatest(types.DELETE_PRODUCT, fetchDeleteProduct),
+  takeLatest(types.GET_PRODUCT_DETAIL, fetchDetails),
 ]);

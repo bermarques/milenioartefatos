@@ -4,6 +4,7 @@ import {
   Input,
   InputNumber,
   Modal,
+  Spin,
   Switch,
   Typography,
   Upload,
@@ -17,20 +18,28 @@ import {
   UploadContainer,
   ValueContainer,
 } from "./styles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlineLoading, AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "app/store/modules/products/actions";
+import { getDetails } from "../../store/modules/products/actions";
 
 export const formats = [".jpg", ".jpeg", ".png"];
 
-const CreateItemModal = ({ visible, handleClose }) => {
+const CreateItemModal = ({ handleClose }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
   const [error, setError] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [modalAction, setModalAction] = useState("CREATE");
+  const [productId, setProductId] = useState(null);
 
-  const { loadingCreateProducts } = useSelector((state) => state.products);
+  const [form] = Form.useForm();
+
+  const { loadingCreateProducts, productDetails, loadingDetails } = useSelector(
+    (state) => state.products
+  );
 
   const dispatch = useDispatch();
   const getBase64 = (file) =>
@@ -91,6 +100,47 @@ const CreateItemModal = ({ visible, handleClose }) => {
     }
   };
 
+  const open = (action = "CREATE", id) => {
+    setVisible(true);
+    setModalAction(action);
+    setProductId(id);
+  };
+
+  const close = () => {
+    setVisible(false);
+    setModalAction("CREATE");
+    setProductId(null);
+    form.resetFields();
+    setFileList([]);
+    handleClose?.();
+  };
+
+  useEffect(() => {
+    modalAction === "EDIT" && dispatch(getDetails(productId));
+    setFileList([
+      {
+        uid: "-1",
+        name: "image.png",
+        status: "done",
+        url: "https://utfs.io/f/edcb5a1e-034e-4a46-993c-d73704bdf0c9_Rectangle%2014.png",
+      },
+    ]);
+  }, [modalAction]);
+
+  useEffect(() => {
+    productDetails &&
+      form.setFieldsValue({
+        name: productDetails.name,
+        description: productDetails.description,
+        indications: productDetails.indications,
+        providingAndDurability: productDetails.providingAndDurability,
+        inStock: productDetails.inStock,
+      });
+  }, [productDetails]);
+
+  CreateItemModal.open = open;
+  CreateItemModal.close = close;
+
   const uploadButton = (
     <div>
       <AiOutlinePlus />
@@ -109,72 +159,74 @@ const CreateItemModal = ({ visible, handleClose }) => {
   };
 
   return (
-    <Modal
-      open={visible}
-      onCancel={handleClose}
-      closeIcon={false}
-      footer={null}
-    >
+    <Modal open={visible} onCancel={close} closeIcon={false} footer={null}>
       <Content>
-        <Form onFinish={handleFinish}>
-          <UploadContainer>
-            <Upload
-              customRequest={dummyRequest}
-              listType="picture-card"
-              fileList={fileList}
-              multiple={false}
-              onPreview={handlePreview}
-              onChange={handleChangeUpload}
-            >
-              {fileList.length >= 1 ? null : uploadButton}
-            </Upload>
-            {error}
-          </UploadContainer>
-          <Modal open={previewOpen} footer={null} onCancel={handleCancel}>
-            <img
-              alt="example"
-              style={{
-                width: "100%",
-              }}
-              src={previewImage}
-            />
-          </Modal>
-          <HalfContainer>
-            <NameContainer>
-              <Typography>Nome do produto</Typography>
-              <Form.Item noStyle name="name">
-                <Input />
-              </Form.Item>
-            </NameContainer>
-          </HalfContainer>
-          <Typography>Descrição</Typography>
-          <Form.Item noStyle name="description">
-            <Input.TextArea rows={4} style={{ resize: "none" }} />
-          </Form.Item>
-          <Typography>Indicações</Typography>
-          <Form.Item noStyle name="indications">
-            <Input.TextArea />
-          </Form.Item>
-          <Typography>Fornecimento e durabilidade</Typography>
-          <Form.Item noStyle name="providingAndDurability">
-            <Input.TextArea />
-          </Form.Item>
-          <Typography>Em estoque</Typography>
-          <Form.Item noStyle name="inStock">
-            <Switch />
-          </Form.Item>
+        {loadingDetails && modalAction === "EDIT" ? (
+          <div style={{ textAlign: "center" }}>
+            <Spin />
+          </div>
+        ) : (
+          <Form onFinish={handleFinish} form={form}>
+            <UploadContainer>
+              <Upload
+                customRequest={dummyRequest}
+                listType="picture-card"
+                fileList={fileList}
+                multiple={false}
+                url="https://utfs.io/f/edcb5a1e-034e-4a46-993c-d73704bdf0c9_Rectangle%2014.png"
+                onPreview={handlePreview}
+                onChange={handleChangeUpload}
+              >
+                {fileList.length >= 1 ? null : uploadButton}
+              </Upload>
+              {error}
+            </UploadContainer>
+            <Modal open={previewOpen} footer={null} onCancel={handleCancel}>
+              <img
+                alt="example"
+                style={{
+                  width: "100%",
+                }}
+                src={previewImage}
+              />
+            </Modal>
+            <HalfContainer>
+              <NameContainer>
+                <Typography>Nome do produto</Typography>
+                <Form.Item noStyle name="name">
+                  <Input />
+                </Form.Item>
+              </NameContainer>
+            </HalfContainer>
+            <Typography>Descrição</Typography>
+            <Form.Item noStyle name="description">
+              <Input.TextArea rows={4} style={{ resize: "none" }} />
+            </Form.Item>
+            <Typography>Indicações</Typography>
+            <Form.Item noStyle name="indications">
+              <Input.TextArea />
+            </Form.Item>
+            <Typography>Fornecimento e durabilidade</Typography>
+            <Form.Item noStyle name="providingAndDurability">
+              <Input.TextArea />
+            </Form.Item>
+            <Typography>Em estoque</Typography>
+            <Form.Item noStyle name="inStock">
+              <Switch />
+            </Form.Item>
 
-          <ButtonContainer>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={loadingCreateProducts}
-              disabled={loadingCreateProducts}
-            >
-              Adicionar produto
-            </Button>
-          </ButtonContainer>
-        </Form>
+            <ButtonContainer>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={loadingCreateProducts}
+                disabled={loadingCreateProducts}
+              >
+                Adicionar produto
+              </Button>
+            </ButtonContainer>
+          </Form>
+        )}
       </Content>
     </Modal>
   );
