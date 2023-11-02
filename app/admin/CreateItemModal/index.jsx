@@ -22,7 +22,7 @@ import { useState, useEffect } from "react";
 import { AiOutlineLoading, AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "app/store/modules/products/actions";
-import { getDetails } from "../../store/modules/products/actions";
+import { editProduct, getDetails } from "../../store/modules/products/actions";
 
 export const formats = [".jpg", ".jpeg", ".png"];
 
@@ -137,7 +137,7 @@ const CreateItemModal = ({ handleClose }) => {
           uid: "-1",
           name: "image.png",
           status: "done",
-          url: productDetails.image,
+          url: `https://uploadthing.com/f/${productDetails.image}`,
         },
       ]);
   }, [productDetails]);
@@ -159,7 +159,10 @@ const CreateItemModal = ({ handleClose }) => {
   );
 
   const handleFinish = (e) => {
-    dispatch(createProduct(e, fileList[0]?.originFileObj, productCategory));
+    const file = fileList[0].url ? fileList[0].url : fileList[0]?.originFileObj;
+    modalAction === "EDIT"
+      ? dispatch(editProduct(e, file, productDetails.category, productId))
+      : dispatch(createProduct(e, fileList[0]?.originFileObj, productCategory));
   };
 
   return (

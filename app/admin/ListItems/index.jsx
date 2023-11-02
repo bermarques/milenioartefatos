@@ -15,7 +15,6 @@ const ListItems = ({ handleOpen, selectedKey }) => {
 
   const dispatch = useDispatch();
 
-  console.log(totalProducts);
   useEffect(() => {
     dispatch(getProducts(undefined, 1, 10, selectedKey));
     setPage(1);

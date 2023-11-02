@@ -49,6 +49,21 @@ export default function products(state = INITIAL_STATE, action) {
         draft.loadingCreateProducts = false;
         draft.successCreateProducts = false;
       });
+    case types.EDIT_PRODUCT:
+      return produce(state, (draft) => {
+        draft.loadingCreateProducts = true;
+        draft.successCreateProducts = false;
+      });
+    case types.EDIT_PRODUCT_SUCCESS:
+      return produce(state, (draft) => {
+        draft.loadingCreateProducts = false;
+        draft.successCreateProducts = true;
+      });
+    case types.EDIT_PRODUCT_ERROR:
+      return produce(state, (draft) => {
+        draft.loadingCreateProducts = false;
+        draft.successCreateProducts = false;
+      });
     case types.GET_PRODUCT_DETAIL:
       return produce(state, (draft) => {
         draft.loadingDetails = true;

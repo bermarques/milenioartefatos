@@ -40,7 +40,6 @@ export function* fetchCreateProduct({ payload }) {
     const { data, file, category } = payload;
     const uploadedFile = yield uploadFile(file);
 
-    console.log(category);
     const res = yield call(api.post, CREATE_PRODUCT_ROUTE, {
       ...data,
       image: uploadedFile[0]?.key,
@@ -56,6 +55,45 @@ export function* fetchCreateProduct({ payload }) {
     yield put({ type: types.CREATE_PRODUCT_ERROR });
   }
 }
+
+export function* fetchEditProduct({ payload }) {
+  try {
+    const { data, file, category, id } = payload;
+    if (typeof file === "string") {
+      const splitedFile = file.split("/");
+      const uploadedFile = splitedFile[splitedFile.length - 1];
+      const res = yield call(api.patch, `${CREATE_PRODUCT_ROUTE}/${id}`, {
+        ...data,
+        image: uploadedFile,
+        inStock: !!data.inStock,
+        category: Number(category),
+      });
+      yield put({
+        type: types.EDIT_PRODUCT_SUCCESS,
+        products: res.data,
+      });
+      yield put(getProducts(undefined, undefined, 10, Number(category)));
+    } else {
+      const uploadedFile = yield uploadFile(file);
+
+      const res = yield call(api.patch, `${CREATE_PRODUCT_ROUTE}/${id}`, {
+        ...data,
+        image: uploadedFile[0].key,
+        inStock: !!data.inStock,
+        category: Number(category),
+      });
+      yield put({
+        type: types.EDIT_PRODUCT_SUCCESS,
+        products: res.data,
+      });
+      yield put(getProducts(undefined, undefined, 10, Number(category)));
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({ type: types.EDIT_PRODUCT_ERROR });
+  }
+}
+
 export function* fetchDeleteProduct({ payload }) {
   try {
     const { product } = payload;
@@ -87,4 +125,5 @@ export default all([
   takeLatest(types.DELETE_PRODUCT, fetchDeleteProduct),
   takeLatest(types.GET_PRODUCT_DETAIL, fetchDetails),
   takeLatest(types.SEARCH_BAR_PRODUCT, fetchProductsSearchbar),
+  takeLatest(types.EDIT_PRODUCT, fetchEditProduct),
 ]);
