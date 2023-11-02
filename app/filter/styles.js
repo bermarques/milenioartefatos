@@ -6,9 +6,32 @@ export const Container = styled.div`
   gap: 30px;
 `;
 export const SideFilter = styled.div`
+  box-sizing: border-box;
+  padding: 12px 18px;
   background: ${COLORS.SOFT_GREEN_TWO};
   width: 262px;
   min-height: 100vh;
+
+  .ant-checkbox-wrapper {
+    width: 100%;
+    margin: 6px 0;
+  }
+
+  .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
+    .ant-checkbox-inner {
+    border-color: ${COLORS.GREEN};
+  }
+
+  .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
+    .ant-checkbox-checked:not(.ant-checkbox-disabled)
+    .ant-checkbox-inner {
+    background: ${COLORS.SOFT_GREEN};
+  }
+
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background: ${COLORS.GREEN};
+    border-color: ${COLORS.GREEN};
+  }
 `;
 export const Content = styled.div`
   width: 100%;
