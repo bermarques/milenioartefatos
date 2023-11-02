@@ -14,12 +14,17 @@ import {
   ButtonContainer,
   Content,
   HalfContainer,
+  ItemContainer,
   NameContainer,
   UploadContainer,
   ValueContainer,
 } from "./styles";
 import { useState, useEffect } from "react";
-import { AiOutlineLoading, AiOutlinePlus } from "react-icons/ai";
+import {
+  AiOutlineLoading,
+  AiOutlinePlus,
+  AiOutlineMinusCircle,
+} from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "app/store/modules/products/actions";
 import { editProduct, getDetails } from "../../store/modules/products/actions";
@@ -173,7 +178,7 @@ const CreateItemModal = ({ handleClose }) => {
             <Spin />
           </div>
         ) : (
-          <Form onFinish={handleFinish} form={form}>
+          <Form onFinish={handleFinish} form={form} layout="vertical">
             <UploadContainer>
               <Upload
                 customRequest={dummyRequest}
@@ -199,27 +204,92 @@ const CreateItemModal = ({ handleClose }) => {
             <HalfContainer>
               <NameContainer>
                 <Typography>Nome do produto</Typography>
-                <Form.Item noStyle name="name">
+                <Form.Item noStyle name="name" required>
                   <Input />
                 </Form.Item>
               </NameContainer>
             </HalfContainer>
             <Typography>Descrição</Typography>
-            <Form.Item noStyle name="description">
+            <Form.Item noStyle name="description" required>
               <Input.TextArea rows={4} style={{ resize: "none" }} />
             </Form.Item>
             <Typography>Indicações</Typography>
-            <Form.Item noStyle name="indications">
+            <Form.Item noStyle name="indications" required>
               <Input.TextArea />
             </Form.Item>
             <Typography>Fornecimento e durabilidade</Typography>
-            <Form.Item noStyle name="providingAndDurability">
+            <Form.Item noStyle name="providingAndDurability" required>
               <Input.TextArea />
             </Form.Item>
             <Typography>Em estoque</Typography>
             <Form.Item noStyle name="inStock">
               <Switch />
             </Form.Item>
+
+            <Form.List
+              name="recomendations"
+              initialValue={[{ quantity: 1, value: 0 }]}
+              rules={[
+                {
+                  validator: async (_, items) => {
+                    if (!items || items.length < 1) {
+                      return Promise.reject(
+                        new Error(
+                          "Necessário adicionar pelo menos uma recomendação de uso"
+                        )
+                      );
+                    }
+                  },
+                },
+              ]}
+            >
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name, ...restField }, idx) => {
+                    return (
+                      <>
+                        <ItemContainer key={key}>
+                          <Form.Item
+                            {...restField}
+                            name={[name, "name"]}
+                            label={idx === 0 ? `Recomendações` : ""}
+                            style={{ width: "100%" }}
+                            rules={[
+                              {
+                                required: true,
+                                whitespace: true,
+                                message:
+                                  "Necessário descrever a recomendação de uso",
+                              },
+                            ]}
+                          >
+                            <Input />
+                          </Form.Item>
+
+                          {idx > 0 ? (
+                            <AiOutlineMinusCircle
+                              className="dynamic-delete-button"
+                              onClick={() => remove(name)}
+                            />
+                          ) : null}
+                        </ItemContainer>
+                      </>
+                    );
+                  })}
+
+                  <Form.Item>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      block
+                      icon={<AiOutlinePlus />}
+                    >
+                      Adicionar recomendação
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
 
             <ButtonContainer>
               <Button
