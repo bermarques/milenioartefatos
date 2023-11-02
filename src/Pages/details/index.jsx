@@ -10,6 +10,7 @@ import {
   Title,
   DescriptionContainer,
   DescriptionTitle,
+  MainData,
 } from "./styles";
 import Imagem from "../../assets/Detalhe.png";
 import { Divider } from "antd";
@@ -20,15 +21,17 @@ const Details = () => {
   return (
     <Container>
       <ItemDetail>
-        <img src={Imagem} alt="imagem" />
+        <img src={Imagem} alt="imagem" width={"60%"} />
         <ItemInfo>
-          <Title>Adesivo Automotivo Alltak Carbon 4D Preto</Title>
-          <Status>
-            Status: <GreenContainer>Em estoque</GreenContainer>
-          </Status>
+          <MainData>
+            <Title>Adesivo Automotivo Alltak Carbon 4D Preto</Title>
+            <Status>
+              Status: <GreenContainer>Em estoque</GreenContainer>
+            </Status>
+          </MainData>
           <CardDescriptionContainer>
             <Divider />
-            <p style={{ fontSize: 14 }}>
+            <p style={{ fontSize: 16 }}>
               O Vinil CARBON é uma película de PVC super calandrado polimérico e
               textura com efeito de quadridimensional (4D), possui técnologia
               Airflow e adesivo reposicionável que proporciona a redução de
