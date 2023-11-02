@@ -5,4 +5,9 @@ export const login = (data) => ({
   payload: data,
 });
 
+export const registerEmail = (email) => ({
+  type: types.EMAIL,
+  payload: email,
+});
+
 export const cleanCacheAuth = () => ({ type: types.CLEAN_CACHE_AUTH });

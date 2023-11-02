@@ -1,6 +1,6 @@
 import api from "../../../services/api";
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { LOGIN_ROUTE } from "./routes";
+import { EMAIL_ROUTE, LOGIN_ROUTE } from "./routes";
 import types from "./types";
 import { notification } from "antd";
 import { configAPITokenAndEntity } from "app/utils/token";
@@ -20,4 +20,17 @@ function* fetchLogin({ payload }) {
   }
 }
 
-export default all([takeLatest(types.LOGIN, fetchLogin)]);
+function* fetchRegisterEmail({ payload }) {
+  try {
+    const res = yield call(api.post, EMAIL_ROUTE, { email: payload });
+
+    yield put({ type: types.EMAIL_SUCCESS });
+  } catch (error) {
+    yield put({ type: types.EMAIL_ERROR });
+  }
+}
+
+export default all([
+  takeLatest(types.LOGIN, fetchLogin),
+  takeLatest(types.EMAIL, fetchRegisterEmail),
+]);

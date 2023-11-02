@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CarouselComponent from "./Components/Carousel";
 import Items from "./Components/Items";
 import { getCarousel, getDashboard } from "./store/modules/products/actions";
+import { registerEmail } from "./store/modules/auth/actions";
 import Newsletter from "./Components/Newsletter";
 import LoadingScreen from "./filter/Loading";
 
@@ -15,7 +16,14 @@ export default function DefaultPage() {
   const [showNewsletter, setShowNewsletter] = useState();
   const dispatch = useDispatch();
 
-  const handleSignUp = () => {
+  const handleSignUp = (email) => {
+    localStorage.setItem("showNewsletter", "false");
+    setShowNewsletter(false);
+    dispatch(registerEmail(email));
+  };
+
+  const handleCancel = () => {
+    localStorage.setItem("showNewsletter", "false");
     setShowNewsletter(false);
   };
 
@@ -25,12 +33,18 @@ export default function DefaultPage() {
   }, []);
 
   useEffect(() => {
-    successDashboard && setShowNewsletter(true);
+    successDashboard &&
+      !localStorage.getItem("showNewsletter") &&
+      setShowNewsletter(true);
   }, [successDashboard]);
 
   return (
     <>
-      <Newsletter handleSignUp={handleSignUp} show={showNewsletter} />
+      <Newsletter
+        handleSignUp={handleSignUp}
+        show={showNewsletter}
+        handleCancel={handleCancel}
+      />
       {loadingDashboard ? (
         <LoadingScreen />
       ) : (

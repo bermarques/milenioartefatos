@@ -1,7 +1,11 @@
 export default {
   LOGIN: "@auth/LOGIN",
   LOGIN_SUCCESS: "@auth/LOGIN_SUCCESS",
-  LOGIN_ERROR: "@auth/GET_PRODUCTS_ERROR",
+  LOGIN_ERROR: "@auth/LOGIN_ERROR",
+
+  EMAIL: "@auth/EMAIL",
+  EMAIL_SUCCESS: "@auth/EMAIL_SUCCESS",
+  EMAIL_ERROR: "@auth/EMAIL_ERROR",
 
   CLEAN_CACHE_AUTH: "@auth/CLEAN_CACHE",
 };
