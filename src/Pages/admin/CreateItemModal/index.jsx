@@ -13,6 +13,7 @@ import {
   Content,
   HalfContainer,
   NameContainer,
+  UploadContainer,
   ValueContainer,
 } from "./styles";
 import { useState } from "react";
@@ -21,15 +22,7 @@ import { AiOutlineLoading, AiOutlinePlus } from "react-icons/ai";
 const CreateItemModal = ({ visible, handleClose }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-  const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([
-    {
-      uid: "-1",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-  ]);
+  const [fileList, setFileList] = useState([]);
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -45,9 +38,6 @@ const CreateItemModal = ({ visible, handleClose }) => {
     }
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
-    setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
-    );
   };
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
 
@@ -72,16 +62,18 @@ const CreateItemModal = ({ visible, handleClose }) => {
       footer={null}
     >
       <Content>
-        <Upload
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-          listType="picture-card"
-          //   fileList={fileList}
-          multiple={false}
-          onPreview={handlePreview}
-          onChange={handleChange}
-        >
-          {fileList.length >= 8 ? null : uploadButton}
-        </Upload>
+        <UploadContainer>
+          <Upload
+            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            listType="picture-card"
+            //   fileList={fileList}
+            multiple={false}
+            onPreview={handlePreview}
+            onChange={handleChange}
+          >
+            {fileList.length >= 1 ? null : uploadButton}
+          </Upload>
+        </UploadContainer>
         <Modal open={previewOpen} footer={null} onCancel={handleCancel}>
           <img
             alt="example"
@@ -98,12 +90,12 @@ const CreateItemModal = ({ visible, handleClose }) => {
           </NameContainer>
           <ValueContainer>
             <Typography>Valor</Typography>
-            <InputNumber
-              defaultValue={1000}
-              formatter={(value) =>
-                `R$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            <Input
+              addonBefore="R$"
+              onChange={(evt) =>
+                typeof evt.currentTarget.value !== Number &&
+                evt.preventDefault()
               }
-              parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
             />
           </ValueContainer>
         </HalfContainer>

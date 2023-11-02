@@ -20,3 +20,8 @@ export const ButtonContainer = styled.div`
   text-align: right;
   margin-top: 20px;
 `;
+
+export const UploadContainer = styled.div`
+  margin: 0 auto;
+  text-align: center;
+`;
