@@ -9,7 +9,7 @@ import { getSearchbarProducts } from "../../../store/modules/products/actions";
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
-  const getWidth = document?.getElementById("search-input")?.offsetWidth || 0;
+  const getWidth = document ? document?.getElementById("search-input")?.offsetWidth : 0;
 
   useEffect(() => {
     if (searchValue.length >= 3) {
