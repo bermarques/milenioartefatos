@@ -11,11 +11,16 @@ import { getProducts } from "../store/modules/products/actions";
 import { UploadButton } from "../utils/uploadthing";
 import sessionStorage from "redux-persist/es/storage/session";
 import LoginPage from "./loginPage";
+import { verifyToken } from "../utils/token";
+import api from "../services/api";
 const Admin = () => {
-  const { loadingLogin } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const { loadingCreateProducts, successCreateProducts } = useSelector(
+    (state) => state.products
+  );
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -31,15 +36,19 @@ const Admin = () => {
   }, []);
 
   useEffect(() => {
-    if (window.sessionStorage.getItem("token")) {
+    if (verifyToken(token)) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
     }
-  }, [loadingLogin]);
+  }, [token]);
+
+  useEffect(() => {
+    successCreateProducts && handleClose();
+  }, [successCreateProducts]);
 
   return (
-    <Layout>
+    <Layout hasSider>
       {!isLoggedIn ? (
         <LoginPage />
       ) : (

@@ -19,13 +19,18 @@ import {
 } from "./styles";
 import { useState } from "react";
 import { AiOutlineLoading, AiOutlinePlus } from "react-icons/ai";
-import { useDispatch } from "react-redux";
-import { createProduct } from "@/app/store/modules/products/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { createProduct } from "app/store/modules/products/actions";
+
+export const formats = [".jpg", ".jpeg", ".png"];
 
 const CreateItemModal = ({ visible, handleClose }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
+  const [error, setError] = useState("");
+
+  const { loadingCreateProducts } = useSelector((state) => state.products);
 
   const dispatch = useDispatch();
   const getBase64 = (file) =>
@@ -35,7 +40,14 @@ const CreateItemModal = ({ visible, handleClose }) => {
       reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
+
   const handleCancel = () => setPreviewOpen(false);
+
+  const dummyRequest = ({ file, onSuccess }) => {
+    setTimeout(() => {
+      onSuccess("ok");
+    }, 0);
+  };
 
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -44,7 +56,40 @@ const CreateItemModal = ({ visible, handleClose }) => {
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
   };
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+
+  const handleChangeUpload = (info) => {
+    setError("");
+    if (
+      info.file.name.split(".").length < 2 ||
+      formats
+        .map((item) => item.replace(".", ""))
+        .indexOf(info.file.name.split(".")[1]) === -1
+    ) {
+      setFileList([]);
+      setTimeout(
+        () =>
+          setError("Aceitamos apenas arquivos no formato .jpg, .jpeg ou .png"),
+        50
+      );
+      return;
+    }
+    setFileList([info.file]);
+    const isOverSized = Number(info?.file?.size) > 10050000;
+    if (isOverSized) {
+      setFileList([]);
+      setTimeout(() => setError("O arquivo precisa ser menor que 10MB!"), 50);
+      return;
+    }
+    if (info.file.status === "uploading") {
+    }
+    if (info.file.status === "done") {
+    }
+    if (info.file.status === "error") {
+    }
+    if (info.file.status === "removed") {
+      setFileList([]);
+    }
+  };
 
   const uploadButton = (
     <div>
@@ -60,7 +105,7 @@ const CreateItemModal = ({ visible, handleClose }) => {
   );
 
   const handleFinish = (e) => {
-    dispatch(createProduct(e));
+    dispatch(createProduct(e, fileList[0]?.originFileObj));
   };
 
   return (
@@ -74,15 +119,16 @@ const CreateItemModal = ({ visible, handleClose }) => {
         <Form onFinish={handleFinish}>
           <UploadContainer>
             <Upload
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              customRequest={dummyRequest}
               listType="picture-card"
-              //   fileList={fileList}
+              fileList={fileList}
               multiple={false}
               onPreview={handlePreview}
-              onChange={handleChange}
+              onChange={handleChangeUpload}
             >
               {fileList.length >= 1 ? null : uploadButton}
             </Upload>
+            {error}
           </UploadContainer>
           <Modal open={previewOpen} footer={null} onCancel={handleCancel}>
             <img
@@ -105,11 +151,12 @@ const CreateItemModal = ({ visible, handleClose }) => {
           <Form.Item noStyle name="description">
             <Input.TextArea rows={4} style={{ resize: "none" }} />
           </Form.Item>
-          <Form.Item noStyle name="value">
-            <InputNumber />
+          <Typography>Indicações</Typography>
+          <Form.Item noStyle name="indications">
+            <Input.TextArea />
           </Form.Item>
-          <Typography>Detalhes</Typography>
-          <Form.Item noStyle name="details">
+          <Typography>Fornecimento e durabilidade</Typography>
+          <Form.Item noStyle name="providingAndDurability">
             <Input.TextArea />
           </Form.Item>
           <Typography>Em estoque</Typography>
@@ -118,7 +165,12 @@ const CreateItemModal = ({ visible, handleClose }) => {
           </Form.Item>
 
           <ButtonContainer>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loadingCreateProducts}
+              disabled={loadingCreateProducts}
+            >
               Adicionar produto
             </Button>
           </ButtonContainer>

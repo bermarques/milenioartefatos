@@ -3,20 +3,20 @@ import { all, call, put, takeLatest } from "redux-saga/effects";
 import { LOGIN_ROUTE } from "./routes";
 import types from "./types";
 import { notification } from "antd";
+import { configAPITokenAndEntity } from "app/utils/token";
 
-export function* fetchLogin({ payload }) {
+function* fetchLogin({ payload }) {
   try {
     const res = yield call(api.post, LOGIN_ROUTE, payload);
 
     yield put({ type: types.LOGIN_SUCCESS, token: res?.data?.token });
-    return;
+    configAPITokenAndEntity(api, res?.data?.token);
   } catch (error) {
     yield put({ type: types.LOGIN_ERROR });
     const errorMessage = error?.response?.data?.message;
-    errorMessage &&
-      notification.open({
-        message: errorMessage,
-      });
+    notification.open({
+      message: errorMessage,
+    });
   }
 }
 

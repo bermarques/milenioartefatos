@@ -23,17 +23,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <body className={inter.className}>
-            <StyledComponentsRegistry>
-              <Container>
-                {!isAdmin && <Header />}
-                {children}
-                {!isAdmin && <Footer />}
-              </Container>
-            </StyledComponentsRegistry>
-          </body>
-        </PersistGate>
+        <body className={inter.className}>
+          <StyledComponentsRegistry>
+            <Container>
+              {!isAdmin && <Header />}
+              {children}
+              {!isAdmin && <Footer />}
+            </Container>
+          </StyledComponentsRegistry>
+        </body>
       </Provider>
     </html>
   );
