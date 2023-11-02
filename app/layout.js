@@ -21,7 +21,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   const isAdmin = usePathname().includes("admin");
   return (
-    <html lang="en">
+    <html lang="pt-br">
       <Provider store={store}>
         <body className={inter.className}>
           <StyledComponentsRegistry>

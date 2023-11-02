@@ -25,7 +25,7 @@ const Items = ({ titulo, items, backgrounded }) => {
               slidesPerView: 1,
               centeredSlides: true,
             },
-            640: {
+            768: {
               slidesPerView: 2,
               centeredSlides: true,
             },

@@ -13,6 +13,12 @@ export const Container = styled.div`
   height: 248px;
   background: ${COLORS.GREEN};
   display: flex;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    height: 350px;
+    padding-bottom: 50px;
+  }
 `;
 
 export const LogoContainer = styled.div`
