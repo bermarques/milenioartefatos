@@ -1,6 +1,10 @@
 import api from "../../../services/api";
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { CREATE_PRODUCT_ROUTE, DELETE_PRODUCT_ROUTE } from "./routes";
+import {
+  CREATE_PRODUCT_ROUTE,
+  DELETE_PRODUCT_ROUTE,
+  GET_DASHBOARD_PRODUCTS_ROUTE,
+} from "./routes";
 import types from "./types";
 import { uploadFile } from "app/utils/uploadFiles";
 import { utapi } from "uploadthing/server";
@@ -18,6 +22,18 @@ export function* fetchProducts({ payload }) {
     });
   } catch (error) {
     yield put({ type: types.GET_PRODUCTS_ERROR });
+  }
+}
+export function* fetchDashboardProducts() {
+  try {
+    const res = yield call(api.get, GET_DASHBOARD_PRODUCTS_ROUTE);
+
+    yield put({
+      type: types.GET_DASHBOARD_PRODUCTS_SUCCESS,
+      data: res.data,
+    });
+  } catch (error) {
+    yield put({ type: types.GET_DASHBOARD_PRODUCTS_ERROR });
   }
 }
 export function* fetchProductsSearchbar({ payload }) {
@@ -106,6 +122,7 @@ export function* fetchDeleteProduct({ payload }) {
     yield put({ type: types.DELETE_PRODUCT_ERROR });
   }
 }
+
 export function* fetchDetails({ payload }) {
   try {
     const { id } = payload;
@@ -126,4 +143,5 @@ export default all([
   takeLatest(types.GET_PRODUCT_DETAIL, fetchDetails),
   takeLatest(types.SEARCH_BAR_PRODUCT, fetchProductsSearchbar),
   takeLatest(types.EDIT_PRODUCT, fetchEditProduct),
+  takeLatest(types.GET_DASHBOARD_PRODUCTS, fetchDashboardProducts),
 ]);

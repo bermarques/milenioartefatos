@@ -3,6 +3,9 @@ import types from "./types";
 
 const INITIAL_STATE = {
   products: [],
+  dashboard: undefined,
+  loadingDashboard: false,
+  successDashboard: false,
   searchbarProducts: [],
   totalProducts: 1,
   loadingSearchbarProducts: false,
@@ -113,6 +116,22 @@ export default function products(state = INITIAL_STATE, action) {
       return produce(state, (draft) => {
         draft.loadingSearchbarProducts = false;
         draft.searchbarProductsSuccess = false;
+      });
+    case types.GET_DASHBOARD_PRODUCTS:
+      return produce(state, (draft) => {
+        draft.loadingDashboard = true;
+        draft.successDashboard = false;
+      });
+    case types.GET_DASHBOARD_PRODUCTS_SUCCESS:
+      return produce(state, (draft) => {
+        draft.dashboard = action.data;
+        draft.loadingDashboard = false;
+        draft.successDashboard = true;
+      });
+    case types.GET_DASHBOARD_PRODUCTS_ERROR:
+      return produce(state, (draft) => {
+        draft.loadingDashboard = false;
+        draft.successDashboard = false;
       });
     case types.CLEAN_CACHE_PRODUCTS:
       return produce(state, (draft) => {

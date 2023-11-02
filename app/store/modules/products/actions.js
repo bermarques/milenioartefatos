@@ -29,4 +29,8 @@ export const getDetails = (id) => ({
   payload: { id },
 });
 
+export const getDashboard = () => ({
+  type: types.GET_DASHBOARD_PRODUCTS,
+});
+
 export const cleanCacheProducts = () => ({ type: types.CLEAN_CACHE_PRODUCTS });
