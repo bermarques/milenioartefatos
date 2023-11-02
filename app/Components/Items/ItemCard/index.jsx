@@ -1,7 +1,9 @@
 import { Container, Descricao, VerDetalhes } from "./styles";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const Item = ({ descricao, img }) => {
+  const { push } = useRouter();
   const handleDetails = () => {
     push(`/detalhes/${product.id}`);
   };
