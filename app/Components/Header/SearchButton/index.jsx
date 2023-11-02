@@ -8,14 +8,16 @@ import { getSearchbarProducts } from "../../../store/modules/products/actions";
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
-  const [_document, set_document] = useState(null)
+  const [_document, set_document] = useState(null);
   const dispatch = useDispatch();
 
-useEffect(() => {
-    set_document(document)
-}, [])
-  
-  const getWidth = _document ? _document?.getElementById("search-input")?.offsetWidth : 500;
+  useEffect(() => {
+    set_document(document);
+  }, []);
+
+  const getWidth = _document
+    ? _document?.getElementById("search-input")?.offsetWidth
+    : 500;
 
   useEffect(() => {
     if (searchValue.length >= 3) {
