@@ -5,6 +5,7 @@ import types from "./types";
 import { uploadFile } from "app/utils/uploadFiles";
 import { utapi } from "uploadthing/server";
 import { getProducts } from "./actions";
+import { getValuesToServer } from "./rules";
 
 export function* fetchProducts({ payload }) {
   try {
@@ -40,12 +41,11 @@ export function* fetchCreateProduct({ payload }) {
     const { data, file, category } = payload;
     const uploadedFile = yield uploadFile(file);
 
-    const res = yield call(api.post, CREATE_PRODUCT_ROUTE, {
-      ...data,
-      image: uploadedFile[0]?.key,
-      inStock: !!data.inStock,
-      category: Number(category),
-    });
+    const res = yield call(
+      api.post,
+      CREATE_PRODUCT_ROUTE,
+      getValuesToServer(data, uploadedFile, category)
+    );
     yield put({
       type: types.CREATE_PRODUCT_SUCCESS,
       products: res.data,

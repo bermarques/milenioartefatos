@@ -4,6 +4,7 @@ import {
   Input,
   InputNumber,
   Modal,
+  Select,
   Spin,
   Switch,
   Typography,
@@ -156,6 +157,15 @@ const CreateItemModal = ({ handleClose }) => {
   CreateItemModal.open = open;
   CreateItemModal.close = close;
 
+  const options = [
+    { label: "Estofados", value: "upholstery" },
+    { label: "Bolsas", value: "purses" },
+    { label: "Comunicação visual", value: "visualCommunication" },
+    { label: "Decoração", value: "decoration" },
+    { label: "Tapeçaria", value: "tapestry" },
+    { label: "Toldo", value: "awning" },
+  ];
+
   const uploadButton = (
     <div>
       <AiOutlinePlus />
@@ -210,21 +220,21 @@ const CreateItemModal = ({ handleClose }) => {
             <HalfContainer>
               <NameContainer>
                 <Typography>Nome do produto</Typography>
-                <Form.Item noStyle name="name" required>
+                <Form.Item noStyle name="name">
                   <Input />
                 </Form.Item>
               </NameContainer>
             </HalfContainer>
             <Typography>Descrição</Typography>
-            <Form.Item noStyle name="description" required>
+            <Form.Item noStyle name="description">
               <Input.TextArea rows={4} style={{ resize: "none" }} />
             </Form.Item>
             <Typography>Indicações</Typography>
-            <Form.Item noStyle name="indications" required>
+            <Form.Item noStyle name="indications">
               <Input.TextArea />
             </Form.Item>
             <Typography>Fornecimento e durabilidade</Typography>
-            <Form.Item noStyle name="providingAndDurability" required>
+            <Form.Item noStyle name="providingAndDurability">
               <Input.TextArea />
             </Form.Item>
             <Typography>Em estoque</Typography>
@@ -299,6 +309,15 @@ const CreateItemModal = ({ handleClose }) => {
               )}
             </Form.List>
 
+            <Form.Item name="tags">
+              <Select
+                mode="multiple"
+                allowClear
+                style={{ width: "100%" }}
+                placeholder="Filtros"
+                options={options}
+              />
+            </Form.Item>
             <ButtonContainer>
               <Button
                 type="primary"
