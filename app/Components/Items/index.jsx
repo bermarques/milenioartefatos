@@ -19,6 +19,7 @@ const Items = ({ titulo, items, backgrounded }) => {
           slidesPerView={4}
           centeredSlides={false}
           navigation={true}
+          autoplay
           modules={[Navigation]}
           breakpoints={{
             0: {
