@@ -1,4 +1,4 @@
-import { Container, Descricao, Valor } from "./styles";
+import { Container, Descricao, VerDetalhes } from "./styles";
 
 const Item = ({ descricao, preco, img }) => {
   const formatter = (preco) =>
@@ -11,7 +11,7 @@ const Item = ({ descricao, preco, img }) => {
     <Container>
       <img width={218} height={218} alt="Imagem" src={img} />
       <Descricao>{descricao}</Descricao>
-      <Valor>{formatter(preco)}</Valor>
+      <VerDetalhes>Ver detalhes</VerDetalhes>
     </Container>
   );
 };

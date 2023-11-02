@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { COLORS } from "../../../consts/COLORS";
+import { Button } from "antd";
 
 export const Container = styled.div`
   width: 218px;
@@ -17,13 +18,18 @@ export const Container = styled.div`
 
 export const Descricao = styled.p`
   margin-top: 0;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   text-align: center;
 `;
 
-export const Valor = styled.p`
-  font-size: 26px;
-  color: ${COLORS.GREEN};
+export const VerDetalhes = styled(Button)`
+  background: ${COLORS.GREEN};
+  &:hover {
+    color: #fff !important;
+    box-shadow: none !important;
+  }
+  color: #fff;
+  width: 100%;
   text-align: center;
   font-weight: 600;
   margin-bottom: 0;

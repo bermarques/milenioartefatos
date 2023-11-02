@@ -1,8 +1,9 @@
 import { Carousel } from "antd";
 import Item from "./ItemCard";
 import { Container, ItemsContainer, Titulo } from "./styles";
+import { COLORS } from "../../consts/COLORS";
 
-const Items = ({ titulo, items }) => {
+const Items = ({ titulo, items, backgrounded }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -12,7 +13,9 @@ const Items = ({ titulo, items }) => {
   };
 
   return (
-    <Container>
+    <Container
+    // style={backgrounded ? { background: COLORS.SOFT_GREEN_TWO } : null}
+    >
       <Titulo>{titulo}</Titulo>
       <ItemsContainer>
         <Carousel {...settings}>

@@ -11,10 +11,20 @@ export default function DefaultPage() {
       <CarouselComponent />
       <Items
         titulo="Tecidos"
+        items={ITEMS.filter((item) => item.tags.includes("automotivos"))}
+      />
+      <Items
+        backgrounded
+        titulo="Automotivos"
         items={ITEMS.filter((item) => item.tags.includes("tecidos"))}
       />
       <Items
-        titulo="Automotivos"
+        titulo="Papéis de parede"
+        items={ITEMS.filter((item) => item.tags.includes("automotivos"))}
+      />
+      <Items
+        backgrounded
+        titulo="Acessórios"
         items={ITEMS.filter((item) => item.tags.includes("automotivos"))}
       />
     </>
