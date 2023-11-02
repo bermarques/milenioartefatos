@@ -8,12 +8,11 @@ export default {
 };
 
 export const Container = styled.div`
-  width: calc(100% - 26%);
+  margin-top: 120px;
+  width: 100%;
   height: 218px;
   background: ${COLORS.GREEN};
   display: flex;
-  position: fixed;
-  bottom: 0;
 `;
 
 export const LogoContainer = styled.div`
